@@ -1,0 +1,83 @@
+---
+     - name: aggg
+       cisco.ios.ios_l3_interfaces:
+         config:
+           - name: GigabitEthernet2
+             ipv4:
+             - address: 10.0.34.1/30
+           - name: GigabitEthernet3
+             ipv4:
+             - address: 172.30.10.101/24
+           - name: Loopback0
+             ipv4:
+             - address: 10.0.0.31/32
+         state: merged
+
+     - name:  configuration with device configuration
+       cisco.ios.ios_interfaces:
+           config:
+             - name: GigabitEthernet2
+               enabled: true
+             - name: GigabitEthernet3
+               enabled: true
+             - name: Loopback0
+               enabled: true
+
+     - name: Merge provided OSPFV3 configuration
+       cisco.ios.ios_ospfv2:
+         config:
+           processes:
+            -   network:
+                -   address: 10.0.34.0
+                    area: '0'
+                    wildcard_bits: 0.0.0.3
+                -   address: 172.30.10.0
+                    area: '0'
+                    wildcard_bits: 0.0.0.255
+                -   address: 10.0.0.31
+                    area: '0'
+                    wildcard_bits: 0.0.0.0
+                passive_interfaces:
+                  interface:
+                    set_interface: true
+                    name:
+                      - GigabitEthernet2
+                      - GigabitEthernet3
+                process_id: 40
+                router_id: 10.0.0.31
+     - name: configure OSPF
+       ios_config:
+         lines:
+            - redistribute bgp 30
+         parents: router ospf 40     
+
+     - name: bgp as 30
+       cisco.ios.ios_bgp:
+         config:
+           bgp_as: 30
+           neighbors:
+           - neighbor: 10.0.34.2
+             remote_as: 40
+
+           - neighbor: 172.30.10.11
+             remote_as: 10
+
+           networks:
+           - prefix: 10.0.34.0
+             masklen: 30
+
+           networks:
+           - prefix: 172.30.10.0
+             masklen: 24
+
+           networks:
+           - prefix: 10.0.0.31
+             masklen: 32
+
+           address_family:
+           - afi: ipv4
+             safi: unicast
+             redistribute:
+             - protocol: ospf
+               id: 40
+         operation: merge

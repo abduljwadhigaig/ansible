@@ -1,0 +1,88 @@
+---
+     - name: aggg
+       cisco.ios.ios_l3_interfaces:
+         config:
+           - name: GigabitEthernet2
+             ipv4:
+             - address: 172.30.10.11/24
+           - name: GigabitEthernet3
+             ipv4:
+             - address: 10.0.12.1/24
+           - name: GigabitEthernet4
+             ipv4:
+             - address: 192.168.111.254/24
+           - name: Loopback0
+             ipv4:
+             - address: 10.0.0.11/32
+         state: merged
+
+     - name:  configuration with device configuration
+       cisco.ios.ios_interfaces:
+           config:
+             - name: GigabitEthernet2
+               enabled: true
+             - name: GigabitEthernet3
+               enabled: true
+             - name: GigabitEthernet4
+               enabled: true
+             - name: Loopback0
+               enabled: true
+
+     - name: Merge provided OSPFV3 configuration
+       cisco.ios.ios_ospfv2:
+         config:
+           processes:
+            -   network:
+                -   address: 172.30.10.0
+                    area: '0'
+                    wildcard_bits: 0.0.0.255
+                -   address: 10.0.12.0
+                    area: '0'
+                    wildcard_bits: 0.0.0.255
+                -   address: 192.168.111.0
+                    area: '0'
+                    wildcard_bits: 0.0.0.255
+                -   address: 10.0.0.11
+                    area: '0'
+                    wildcard_bits: 0.0.0.0
+                passive_interfaces:
+                  interface:
+                    set_interface: true
+                    name:
+                      - GigabitEthernet2
+                      - GigabitEthernet3
+                process_id: 40
+                router_id: 10.0.0.11
+     - name: configure OSPF
+       ios_config:
+         lines:
+            - redistribute bgp 10
+         parents: router ospf 40     
+
+     - name: bgp as 10
+       cisco.ios.ios_bgp:
+         config:
+           bgp_as: 10
+           neighbors:
+           - neighbor: 10.0.12.2
+             remote_as: 20
+           - neighbor: 172.30.10.101
+             remote_as: 30
+           networks:
+           - prefix: 10.0.12.0
+             masklen: 24
+           networks:
+           - prefix: 10.0.0.11
+             masklen: 32
+           - prefix: 172.30.10.0
+             masklen: 24
+           - prefix: 192.168.111.0
+             masklen: 24
+
+           address_family:
+           - afi: ipv4
+             safi: unicast
+             redistribute:
+             - protocol: ospf
+               id: 40
+         operation: merge

@@ -1,0 +1,26 @@
+---
+- name: CiscoA
+  hosts: CiscoA
+  gather_facts: false
+  tasks:
+     - include: CiscoA.yaml  
+- name: CiscoB 
+  hosts: CiscoB
+  gather_facts: false
+  tasks:
+     - include: CiscoB.yaml
+- name: CiscoC
+  hosts: CiscoC
+  gather_facts: false
+  tasks:
+     - include: CiscoC.yaml
+- name: R21
+  hosts: R21
+  gather_facts: false
+  tasks:
+     - include: R21.yaml
+- name: R11
+  hosts: R11
+  gather_facts: false
+  tasks:
+     - include: R11.yaml
