@@ -19,6 +19,11 @@
   gather_facts: false
   tasks:
      - include: R21.yaml
+- name: R22
+  hosts: R22
+  gather_facts: false
+  tasks:
+     - include: R22.yaml
 - name: R11
   hosts: R11
   gather_facts: false
