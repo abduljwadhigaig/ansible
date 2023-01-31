@@ -40,10 +40,10 @@
                     area: '200'
                     wildcard_bits: 0.0.0.0
                 -   address: 192.168.222.128
-                    area: '0'
+                    area: '200'
                     wildcard_bits: 0.0.0.63
                 -   address: 192.168.222.192
-                    area: '0'
+                    area: '200'
                     wildcard_bits: 0.0.0.63
                 process_id: 40
                 router_id: 10.0.0.22
