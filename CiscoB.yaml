@@ -68,6 +68,11 @@
            - afi: ipv4
              safi: unicast
              redistribute:
-             - protocol: ospf
-               id: 40
+             -   ospf: 
+                     match: 
+                         external: true
+                         internal: true
+                         type_1: true
+                         type_2: true
+                     process_id: 40
          operation: merge
