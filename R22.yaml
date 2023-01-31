@@ -10,7 +10,7 @@
              - address: 192.168.222.190/26
            - name: GigabitEthernet4
              ipv4:
-             - address: 192.168.222.254/24
+             - address: 192.168.222.254/26
            - name: Loopback0
              ipv4:
              - address: 10.0.0.22/32
