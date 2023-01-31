@@ -63,16 +63,10 @@
            networks:
            - prefix: 10.0.0.41
              masklen: 32
-
-           address_family:
-           - afi: ipv4
-             safi: unicast
-             redistribute:
-             -   ospf: 
-                     match: 
-                         external: true
-                         internal: true
-                         type_1: true
-                         type_2: true
-                     process_id: 40
          operation: merge
+         
+     - name: configure OSPF
+       ios_config:
+         lines:
+            - redistribute ospf 40 match internal external 1 external 2
+         parents: router bgp 40 
