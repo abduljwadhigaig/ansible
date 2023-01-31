@@ -1,0 +1,24 @@
+---
+- name: Convert configured OSPFV2 resource to structured data
+  hosts: routers 
+
+  gather_facts: false
+  tasks:
+
+  - name: Create inventory directory if not exist 
+    file:
+      path: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}"
+      state: directory
+
+# Pull current OSPFv2 config 
+
+  - name: Use the OSPFV2 resource module to gather the current config
+    cisco.ios.ios_bgp_global:
+      config: 
+      state: gathered
+    register: bgp
+
+  - name: Write the OSPFV2 configuration to a file
+    copy:
+      content: "{{ {'bgp': bgp['gathered']} | to_nice_yaml }}"
+      dest: "{{ inventory_dir }}/host_vars/{{ inventory_hostname }}/bgp.yaml"
