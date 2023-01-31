@@ -10,7 +10,7 @@
              - address: 10.0.12.2/24
            - name: GigabitEthernet4
              ipv4:
-             - address: 192.168.222.254/24
+             - address: 192.168.222.126/25
            - name: Loopback0
              ipv4:
              - address: 10.0.0.21/32
@@ -33,12 +33,6 @@
          config:
            processes:
             -   network:
-                -   address: 172.30.20.0
-                    area: '0'
-                    wildcard_bits: 0.0.0.255
-                -   address: 10.0.12.0
-                    area: '0'
-                    wildcard_bits: 0.0.0.255
                 -   address: 192.168.222.0
                     area: '0'
                     wildcard_bits: 0.0.0.255
@@ -75,8 +69,6 @@
            - prefix: 10.0.0.21
              masklen: 32
            - prefix: 172.30.20.0
-             masklen: 24
-           - prefix: 192.168.222.0
              masklen: 24
 
            address_family:
