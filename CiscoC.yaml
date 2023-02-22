@@ -60,7 +60,7 @@
            networks:
            - prefix: 10.30.20.0
              masklen: 24
-           networks:
+           
            - prefix: 10.0.0.42
              masklen: 32
          operation: merge
