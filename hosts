@@ -1,10 +1,10 @@
 [routers]
-CiscoA ansible_host=10.10.20.175
-CiscoB ansible_host=10.10.20.176
-CiscoC ansible_host=10.10.20.177
-R21 ansible_host=10.10.20.178
-R11 ansible_host=10.10.20.180
-R22 ansible_host=10.10.20.179
+CiscoA ansible_host=192.168.122.79
+CiscoB ansible_host=192.168.122.120
+CiscoC ansible_host=192.168.122.175
+R21 ansible_host=192.168.122.215
+R11 ansible_host=192.168.122.82
+R22 ansible_host=192.168.122.92
  
 [routers:vars]
 ansible_user= cisco
