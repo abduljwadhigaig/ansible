@@ -71,7 +71,7 @@
            networks:
            - prefix: 10.0.12.0
              masklen: 24
-           networks:
+           
            - prefix: 10.0.0.11
              masklen: 32
            - prefix: 172.30.10.0
