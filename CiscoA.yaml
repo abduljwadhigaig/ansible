@@ -66,11 +66,11 @@
            - prefix: 10.0.34.0
              masklen: 30
 
-           networks:
+         
            - prefix: 172.30.10.0
              masklen: 24
 
-           networks:
+
            - prefix: 10.0.0.31
              masklen: 32
 
